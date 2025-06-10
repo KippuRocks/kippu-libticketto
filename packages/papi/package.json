@@ -1,0 +1,47 @@
+{
+  "name": "@kippurocks/libticketto-papi",
+  "version": "1.0.0",
+  "description": "A Kippu implementation of The Ticketto Protocol with Polkadot-API",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "papi",
+    "build": "tsc && tsc -p ./tsconfig.cjs.json",
+    "prepack": "npm run build"
+  },
+  "keywords": [
+    "kippu",
+    "ticketto",
+    "api",
+    "polkadot-api",
+    "papi"
+  ],
+  "author": {
+    "name": "Pablo Andrés Dorado Suárez",
+    "email": "hola@pablodorado.com",
+    "url": "https://pablodorado.com"
+  },
+  "dependencies": {
+    "@polkadot-api/descriptors": "file:.papi/descriptors",
+    "@polkadot-api/sdk-ink": "^0.0.1-1",
+    "@polkadot-labs/hdkd-helpers": "^0.0.16",
+    "@ticketto/protocol": "^1.5.0",
+    "inversify": "^7.5.1",
+    "polkadot-api": "^1.11.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3",
+    "reflect-metadata": "^0.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/kippurocks/libticketto.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kippurocks/libticketto/issues"
+  },
+  "devDependencies": {
+    "@virtonetwork/authenticators-webauthn": "^1.0.5",
+    "@virtonetwork/signer": "^1.0.14",
+    "nid-webauthn-emulator": "^0.2.4"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "version": 0,
+  "descriptorPath": ".papi/descriptors",
+  "entries": {
+    "kusama": {
+      "chain": "ksmcc3",
+      "metadata": ".papi/metadata/kusama.scale",
+      "genesis": "0xb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe"
+    },
+    "kreivo": {
+      "wsUrl": "wss://testnet.kreivo.kippu.rocks",
+      "metadata": ".papi/metadata/kreivo.scale",
+      "genesis": "0x5cdd465e1273859192b043721e63ad19c8585f7c9779c53cba1d3260549b60ad"
+    }
+  },
+  "ink": {
+    "tickettoTickets": ".papi/contracts/tickettoTickets.json",
+    "tickettoEvents": ".papi/contracts/tickettoEvents.json"
+  }
+}

@@ -1,0 +1,1763 @@
+{
+  "source": {
+    "hash": "0x6e3c9be77fc53c8ebc9f7d75e575031b81b4f72b96528607baae399b82692253",
+    "language": "ink! 5.1.1",
+    "compiler": "rustc 1.86.0-nightly",
+    "build_info": {
+      "build_mode": "Release",
+      "cargo_contract_version": "5.0.3",
+      "rust_toolchain": "nightly-aarch64-apple-darwin",
+      "wasm_opt_settings": {
+        "keep_debug_symbols": false,
+        "optimization_passes": "Z"
+      }
+    }
+  },
+  "contract": {
+    "name": "ticketto_events",
+    "version": "0.1.0",
+    "authors": [
+      "The Kippu Authors <contact@kippu.rocks>"
+    ],
+    "description": "Smart contract that allows organisers to create and manage their events",
+    "repository": "https://github.com/kippurocks/kippu-contracts.git",
+    "license": "Apache-2.0"
+  },
+  "image": null,
+  "spec": {
+    "constructors": [
+      {
+        "args": [],
+        "default": false,
+        "docs": [
+          "Initialize the contract."
+        ],
+        "label": "new",
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink_primitives",
+            "ConstructorResult"
+          ],
+          "type": 2
+        },
+        "selector": "0xffffffff"
+      }
+    ],
+    "docs": [],
+    "environment": {
+      "accountId": {
+        "displayName": [
+          "AccountId"
+        ],
+        "type": 43
+      },
+      "balance": {
+        "displayName": [
+          "Balance"
+        ],
+        "type": 25
+      },
+      "blockNumber": {
+        "displayName": [
+          "BlockNumber"
+        ],
+        "type": 0
+      },
+      "chainExtension": {
+        "displayName": [
+          "ChainExtension"
+        ],
+        "type": 45
+      },
+      "hash": {
+        "displayName": [
+          "Hash"
+        ],
+        "type": 44
+      },
+      "maxEventTopics": 4,
+      "staticBufferSize": 16384,
+      "timestamp": {
+        "displayName": [
+          "Timestamp"
+        ],
+        "type": 15
+      }
+    },
+    "events": [
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": false,
+            "label": "id",
+            "type": {
+              "displayName": [
+                "EventId"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "docs": [],
+            "indexed": false,
+            "label": "organiser",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 43
+            }
+          }
+        ],
+        "docs": [
+          "Emits when an event is registered."
+        ],
+        "label": "EventRegistered",
+        "module_path": "ticketto_events::ticketto_events",
+        "signature_topic": "0xcbf41b1aa49d9352f0bd1b840a456b78bde2074a28bd0546c6aa995e2e0805f3"
+      }
+    ],
+    "lang_error": {
+      "displayName": [
+        "ink",
+        "LangError"
+      ],
+      "type": 4
+    },
+    "messages": [
+      {
+        "args": [
+          {
+            "label": "event_id",
+            "type": {
+              "displayName": [
+                "EventId"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " A permissionless method, that allows anyone to cover the deposit account of the event.",
+          " Fails if the given event does not exist.",
+          "",
+          " It is expected to have a zero difference, because it's a no-op (in storage terms)."
+        ],
+        "label": "deposit",
+        "mutates": true,
+        "payable": true,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 5
+        },
+        "selector": "0xfffffffe"
+      },
+      {
+        "args": [
+          {
+            "label": "name",
+            "type": {
+              "displayName": [
+                "EventName"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "label": "capacity",
+            "type": {
+              "displayName": [
+                "EventCapacity"
+              ],
+              "type": 15
+            }
+          },
+          {
+            "label": "ticket_class",
+            "type": {
+              "displayName": [
+                "TicketClass"
+              ],
+              "type": 16
+            }
+          },
+          {
+            "label": "maybe_dates",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 29
+            }
+          },
+          {
+            "label": "maybe_metadata",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 32
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Creates a new inventory for storing the event (and its details).",
+          "",
+          " The caller must assume the storage cost to create a new event, otherwise, a",
+          " [`LowBalance`][Error::LowBalance] error will be thrown."
+        ],
+        "label": "create_event",
+        "mutates": true,
+        "payable": true,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 33
+        },
+        "selector": "0x8067c49f"
+      },
+      {
+        "args": [
+          {
+            "label": "event_id",
+            "type": {
+              "displayName": [
+                "EventId"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "maybe_name",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 32
+            }
+          },
+          {
+            "label": "maybe_capacity",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 18
+            }
+          },
+          {
+            "label": "maybe_ticket_class",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 36
+            }
+          },
+          {
+            "label": "maybe_dates",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 29
+            }
+          },
+          {
+            "label": "maybe_metadata",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 32
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "update",
+        "mutates": false,
+        "payable": true,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 37
+        },
+        "selector": "0x5f234f5d"
+      },
+      {
+        "args": [
+          {
+            "label": "event_id",
+            "type": {
+              "displayName": [
+                "EventId"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "bump_state",
+        "mutates": true,
+        "payable": true,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 37
+        },
+        "selector": "0xcb3ac443"
+      },
+      {
+        "args": [
+          {
+            "label": "event_id",
+            "type": {
+              "displayName": [
+                "EventId"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "get",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 39
+        },
+        "selector": "0x2f865bd9"
+      }
+    ]
+  },
+  "storage": {
+    "root": {
+      "layout": {
+        "struct": {
+          "fields": [
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 0
+                }
+              },
+              "name": "next_event_id"
+            }
+          ],
+          "name": "TickettoEvents"
+        }
+      },
+      "root_key": "0x00000000",
+      "ty": 1
+    }
+  },
+  "types": [
+    {
+      "id": 0,
+      "type": {
+        "def": {
+          "primitive": "u32"
+        }
+      }
+    },
+    {
+      "id": 1,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "next_event_id",
+                "type": 0,
+                "typeName": "<EventId as::ink::storage::traits::AutoStorableHint<::ink::\nstorage::traits::ManualKey<323475497u32, ()>,>>::Type"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ticketto_events",
+          "ticketto_events",
+          "TickettoEvents"
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 3
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 4
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 3
+          },
+          {
+            "name": "E",
+            "type": 4
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "type": {
+        "def": {
+          "tuple": []
+        }
+      }
+    },
+    {
+      "id": 4,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 1,
+                "name": "CouldNotReadInput"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "LangError"
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 6
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 4
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 6
+          },
+          {
+            "name": "E",
+            "type": 4
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 3
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 7
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 3
+          },
+          {
+            "name": "E",
+            "type": 7
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "LowBalance"
+              },
+              {
+                "index": 1,
+                "name": "Overflow"
+              },
+              {
+                "index": 2,
+                "name": "EventNotFound"
+              },
+              {
+                "index": 3,
+                "name": "TicketNotFound"
+              },
+              {
+                "index": 4,
+                "name": "NoPermission"
+              },
+              {
+                "index": 5,
+                "name": "DatesNotSet"
+              },
+              {
+                "index": 6,
+                "name": "InvalidState"
+              },
+              {
+                "index": 7,
+                "name": "MaxCapacity"
+              },
+              {
+                "index": 8,
+                "name": "AttendanceOutOfDates"
+              },
+              {
+                "index": 9,
+                "name": "MaxAttendances"
+              },
+              {
+                "index": 10,
+                "name": "CannotTransfer"
+              },
+              {
+                "index": 11,
+                "name": "NoPendingTransfer"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 8,
+                    "typeName": "KreivoApisError"
+                  }
+                ],
+                "index": 12,
+                "name": "KreivoApiError"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 12,
+                    "typeName": "[u8; 32]"
+                  }
+                ],
+                "index": 13,
+                "name": "Other"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ticketto_types",
+          "error",
+          "Error"
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "UnknownError"
+              },
+              {
+                "index": 1,
+                "name": "ExtQueryError"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 9,
+                    "typeName": "AssetsApiError"
+                  }
+                ],
+                "index": 2,
+                "name": "Assets"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 10,
+                    "typeName": "ListingsApiError"
+                  }
+                ],
+                "index": 3,
+                "name": "Listings"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 11,
+                    "typeName": "MembershipsApiError"
+                  }
+                ],
+                "index": 4,
+                "name": "Memberships"
+              }
+            ]
+          }
+        },
+        "path": [
+          "kreivo_apis",
+          "apis",
+          "error",
+          "KreivoApisError"
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "CannotDeposit"
+              },
+              {
+                "index": 1,
+                "name": "CannotTransfer"
+              }
+            ]
+          }
+        },
+        "path": [
+          "kreivo_apis",
+          "apis",
+          "error",
+          "assets",
+          "AssetsApiError"
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "NoMerchantId"
+              },
+              {
+                "index": 1,
+                "name": "UnknownInventory"
+              },
+              {
+                "index": 2,
+                "name": "FailedToCreateInventory"
+              },
+              {
+                "index": 3,
+                "name": "ArchivedInventory"
+              },
+              {
+                "index": 4,
+                "name": "FailedToArchiveInventory"
+              },
+              {
+                "index": 5,
+                "name": "FailedToPublishItem"
+              },
+              {
+                "index": 6,
+                "name": "UnknownItem"
+              },
+              {
+                "index": 7,
+                "name": "NotForResale"
+              },
+              {
+                "index": 8,
+                "name": "ItemNonTransferable"
+              },
+              {
+                "index": 9,
+                "name": "FailedToSetNotForResale"
+              },
+              {
+                "index": 10,
+                "name": "FailedToSetTransferable"
+              },
+              {
+                "index": 11,
+                "name": "FailedToSetAttribute"
+              },
+              {
+                "index": 12,
+                "name": "CannotTransfer"
+              },
+              {
+                "index": 13,
+                "name": "FailedToSetMetadata"
+              }
+            ]
+          }
+        },
+        "path": [
+          "kreivo_apis",
+          "apis",
+          "error",
+          "listings",
+          "ListingsApiError"
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "NoGroup"
+              },
+              {
+                "index": 1,
+                "name": "UnknownMembership"
+              },
+              {
+                "index": 2,
+                "name": "CannotAddMember"
+              },
+              {
+                "index": 3,
+                "name": "FailedToSetAttribute"
+              }
+            ]
+          }
+        },
+        "path": [
+          "kreivo_apis",
+          "apis",
+          "error",
+          "memberships",
+          "MembershipsApiError"
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "type": {
+        "def": {
+          "array": {
+            "len": 32,
+            "type": 13
+          }
+        }
+      }
+    },
+    {
+      "id": 13,
+      "type": {
+        "def": {
+          "primitive": "u8"
+        }
+      }
+    },
+    {
+      "id": 14,
+      "type": {
+        "def": {
+          "sequence": {
+            "type": 13
+          }
+        }
+      }
+    },
+    {
+      "id": 15,
+      "type": {
+        "def": {
+          "primitive": "u64"
+        }
+      }
+    },
+    {
+      "id": 16,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "attendance_policy",
+                "type": 17,
+                "typeName": "AttendancePolicy"
+              },
+              {
+                "name": "price",
+                "type": 19,
+                "typeName": "ItemPrice"
+              },
+              {
+                "name": "maybe_restrictions",
+                "type": 26,
+                "typeName": "Option<TicketRestrictions>"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ticketto_types",
+          "event",
+          "TicketClass"
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "Single"
+              },
+              {
+                "fields": [
+                  {
+                    "name": "max",
+                    "type": 0,
+                    "typeName": "u32"
+                  },
+                  {
+                    "name": "maybe_until",
+                    "type": 18,
+                    "typeName": "Option<Timestamp>"
+                  }
+                ],
+                "index": 1,
+                "name": "Multiple"
+              },
+              {
+                "fields": [
+                  {
+                    "name": "maybe_until",
+                    "type": 18,
+                    "typeName": "Option<Timestamp>"
+                  }
+                ],
+                "index": 2,
+                "name": "Unlimited"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "Timestamp",
+            "type": 15
+          }
+        ],
+        "path": [
+          "ticketto_types",
+          "ticket",
+          "AttendancePolicy"
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 15
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 15
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "asset",
+                "type": 20,
+                "typeName": "Asset"
+              },
+              {
+                "name": "amount",
+                "type": 25,
+                "typeName": "Balance"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "Asset",
+            "type": 20
+          },
+          {
+            "name": "Balance",
+            "type": 25
+          }
+        ],
+        "path": [
+          "fc_traits_listings",
+          "item",
+          "ItemPrice"
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 0,
+                    "typeName": "u32"
+                  }
+                ],
+                "index": 0,
+                "name": "Here"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 21,
+                    "typeName": "Para"
+                  }
+                ],
+                "index": 1,
+                "name": "Sibling"
+              },
+              {
+                "fields": [
+                  {
+                    "name": "network",
+                    "type": 23,
+                    "typeName": "NetworkId"
+                  },
+                  {
+                    "name": "child",
+                    "type": 24,
+                    "typeName": "Option<Para>"
+                  }
+                ],
+                "index": 2,
+                "name": "External"
+              }
+            ]
+          }
+        },
+        "path": [
+          "virto_common",
+          "multilocation_asset_id",
+          "FungibleAssetLocation"
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "id",
+                "type": 22,
+                "typeName": "u16"
+              },
+              {
+                "name": "pallet",
+                "type": 13,
+                "typeName": "u8"
+              },
+              {
+                "name": "index",
+                "type": 0,
+                "typeName": "u32"
+              }
+            ]
+          }
+        },
+        "path": [
+          "virto_common",
+          "multilocation_asset_id",
+          "Para"
+        ]
+      }
+    },
+    {
+      "id": 22,
+      "type": {
+        "def": {
+          "primitive": "u16"
+        }
+      }
+    },
+    {
+      "id": 23,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "Polkadot"
+              },
+              {
+                "index": 1,
+                "name": "Kusama"
+              },
+              {
+                "fields": [
+                  {
+                    "name": "chain_id",
+                    "type": 15,
+                    "typeName": "u64"
+                  }
+                ],
+                "index": 2,
+                "name": "Ethereum"
+              }
+            ]
+          }
+        },
+        "path": [
+          "virto_common",
+          "multilocation_asset_id",
+          "NetworkId"
+        ]
+      }
+    },
+    {
+      "id": 24,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 21
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 21
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 25,
+      "type": {
+        "def": {
+          "primitive": "u128"
+        }
+      }
+    },
+    {
+      "id": 26,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 27
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 27
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 27,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "cannot_resale",
+                "type": 28,
+                "typeName": "bool"
+              },
+              {
+                "name": "cannot_transfer",
+                "type": 28,
+                "typeName": "bool"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ticketto_types",
+          "ticket",
+          "TicketRestrictions"
+        ]
+      }
+    },
+    {
+      "id": 28,
+      "type": {
+        "def": {
+          "primitive": "bool"
+        }
+      }
+    },
+    {
+      "id": 29,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 30
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 30
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 30,
+      "type": {
+        "def": {
+          "sequence": {
+            "type": 31
+          }
+        }
+      }
+    },
+    {
+      "id": 31,
+      "type": {
+        "def": {
+          "tuple": [
+            15,
+            15
+          ]
+        }
+      }
+    },
+    {
+      "id": 32,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 14
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 14
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 33,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 34
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 4
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 34
+          },
+          {
+            "name": "E",
+            "type": 4
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 34,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 35
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 7
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 35
+          },
+          {
+            "name": "E",
+            "type": 7
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 35,
+      "type": {
+        "def": {
+          "tuple": [
+            0,
+            25
+          ]
+        }
+      }
+    },
+    {
+      "id": 36,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 16
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 16
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 37,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 38
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 4
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 38
+          },
+          {
+            "name": "E",
+            "type": 4
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 38,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 25
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 7
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 25
+          },
+          {
+            "name": "E",
+            "type": 7
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 39,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 40
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 4
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 40
+          },
+          {
+            "name": "E",
+            "type": 4
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 40,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 41
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 41
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 41,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "organiser",
+                "type": 12,
+                "typeName": "[u8; 32]"
+              },
+              {
+                "name": "name",
+                "type": 14,
+                "typeName": "EventName"
+              },
+              {
+                "name": "state",
+                "type": 42,
+                "typeName": "EventState"
+              },
+              {
+                "name": "capacity",
+                "type": 15,
+                "typeName": "EventCapacity"
+              },
+              {
+                "name": "class",
+                "type": 16,
+                "typeName": "TicketClass"
+              },
+              {
+                "name": "dates",
+                "type": 30,
+                "typeName": "EventDates"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ticketto_types",
+          "event",
+          "EventInfo"
+        ]
+      }
+    },
+    {
+      "id": 42,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "Created"
+              },
+              {
+                "index": 1,
+                "name": "Sales"
+              },
+              {
+                "index": 2,
+                "name": "Ongoing"
+              },
+              {
+                "index": 3,
+                "name": "Finished"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ticketto_types",
+          "event",
+          "EventState"
+        ]
+      }
+    },
+    {
+      "id": 43,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 12,
+                "typeName": "[u8; 32]"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "types",
+          "AccountId"
+        ]
+      }
+    },
+    {
+      "id": 44,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 12,
+                "typeName": "[u8; 32]"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "types",
+          "Hash"
+        ]
+      }
+    },
+    {
+      "id": 45,
+      "type": {
+        "def": {
+          "variant": {}
+        },
+        "path": [
+          "kreivo_apis",
+          "contract",
+          "chain_extension",
+          "ChainExtension"
+        ]
+      }
+    }
+  ],
+  "version": 5
+}
