@@ -1,0 +1,43 @@
+{
+  "name": "@kippurocks/libticketto",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A set of javascript packages to allow Kippu implement The Ticketto Protocol",
+  "author": {
+    "name": "Pablo Andrés Dorado Suárez",
+    "email": "hola@pablodorado.com",
+    "url": "https://pablodorado.com"
+  },
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "predocs": "npm run build",
+    "docs": "typedoc",
+    "test": "npm test --workspaces --if-present"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/kippurocks/kippu-ticketto.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kippurocks/kippu-ticketto/issues"
+  },
+  "homepage": "https://github.com/kippurocks/kippu-ticketto#readme",
+  "keywords": [
+    "ticketto",
+    "nft",
+    "tickets",
+    "events",
+    "kippu"
+  ],
+  "devDependencies": {
+    "@tsconfig/node-lts": "^22.0.1",
+    "@types/node": "^22.15.28",
+    "ts-node": "^10.9.2",
+    "typedoc": "^0.28.5",
+    "typescript": "^5.8.3"
+  }
+}
