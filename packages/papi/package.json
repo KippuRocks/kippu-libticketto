@@ -7,7 +7,28 @@
   "scripts": {
     "postinstall": "papi",
     "build": "tsc && tsc -p ./tsconfig.cjs.json",
-    "prepack": "npm run build"
+    "prepack": "npm run build",
+    "test": "LOG_LEVEL=warn tsx --test --test-force-exit 'test/**/*.test.ts'",
+    "test:only": "LOG_LEVEL=warn tsx --test --test-only --test-force-exit 'test/**/*.test.ts'"
+  },
+  "files": [
+    "./.papi/contracts",
+    "./.papi/metadata",
+    "./.papi/polkadot-api.json",
+    "./dist",
+    "./README.md"
+  ],
+  "main": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./types": {
+      "import": "./dist/esm/types.js",
+      "require": "./dist/cjs/types.js"
+    }
   },
   "keywords": [
     "kippu",
@@ -27,10 +48,9 @@
     "@polkadot-labs/hdkd-helpers": "^0.0.16",
     "@ticketto/protocol": "^1.5.0",
     "inversify": "^7.5.1",
-    "polkadot-api": "^1.11.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.8.3",
-    "reflect-metadata": "^0.2.2"
+    "polkadot-api": "^1.13.1",
+    "reflect-metadata": "^0.2.2",
+    "typescript": "^5.8.3"
   },
   "repository": {
     "type": "git",
@@ -40,8 +60,11 @@
     "url": "https://github.com/kippurocks/libticketto/issues"
   },
   "devDependencies": {
+    "@acala-network/chopsticks-core": "^1.1.0",
+    "@types/tmp": "^0.2.6",
     "@virtonetwork/authenticators-webauthn": "^1.0.5",
     "@virtonetwork/signer": "^1.0.14",
-    "nid-webauthn-emulator": "^0.2.4"
+    "nid-webauthn-emulator": "^0.2.4",
+    "tsx": "^4.20.3"
   }
 }
