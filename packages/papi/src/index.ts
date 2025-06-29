@@ -9,7 +9,7 @@ import {
   TickettoConsumer,
 } from "@ticketto/protocol";
 import { EventQueue, WebStubEventSubscribtion } from "./subscriptions.ts";
-import { KippuConfig, KreivoTx, TOKEN } from "./types.ts";
+import { KippuConfig, TOKEN } from "./types.ts";
 import { KippuDirectoryCalls, KippuDirectoryStorage } from "./directory.ts";
 import { KippuEventsCalls, KippuEventsStorage } from "./events.ts";
 import { KippuTicketsCalls, KippuTicketsStorage } from "./tickets.ts";
@@ -19,6 +19,14 @@ import { Container } from "inversify";
 import { TickettoModelConverter } from "./tickettoModel.ts";
 import { TransactionSubmitter } from "./submitter.ts";
 import { createInkSdk } from "@polkadot-api/sdk-ink";
+
+export {
+  isKreivoTx,
+  KreivoTx,
+  KippuConsumerSettings,
+  KippuConfig,
+  KippuAccountProvider,
+} from "./types.ts";
 
 export class KippuPAPIConsumer
   implements TickettoConsumer<KippuConfig> {
