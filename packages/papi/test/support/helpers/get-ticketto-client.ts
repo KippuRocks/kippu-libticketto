@@ -19,7 +19,7 @@ export async function getTickettoClient(
   const merchantId =
     await api.query.ContractsStore.ContractMerchantId.getValue(eventsContractAddress!);
 
-  return new TickettoClientBuilder<KreivoTx>()
+  return new TickettoClientBuilder()
     .withConsumer(KippuPAPIConsumer)
     .withConfig({
       accountProvider,

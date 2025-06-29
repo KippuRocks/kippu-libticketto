@@ -5,7 +5,6 @@ import { getChopsticksClient, prepare } from "../support/prepare/index.ts";
 import { keyring, signerFromTime } from "../support/helpers/dev-keyrring.ts";
 
 import { EVENT } from "../support/fixtures/events.ts";
-import { KreivoTx } from "../../src/types.ts";
 import { PolkadotClient } from "polkadot-api";
 import { TickettoClient } from "@ticketto/protocol";
 import assert from "node:assert";
@@ -65,8 +64,8 @@ describe("KippuEventsCalls", async () => {
   });
 
   describe("update", async () => {
-    let ALICE: TickettoClient<KreivoTx>;
-    let BOB: TickettoClient<KreivoTx>;
+    let ALICE: TickettoClient;
+    let BOB: TickettoClient;
 
     let eventId: EventId;
     before(async () => {
@@ -109,8 +108,8 @@ describe("KippuEventsCalls", async () => {
 
   describe("bumpState", () => {
     describe("created -> sales", async () => {
-      let ALICE: TickettoClient<KreivoTx>;
-      let BOB: TickettoClient<KreivoTx>;
+      let ALICE: TickettoClient;
+      let BOB: TickettoClient;
 
       let eventId: EventId;
       before(async () => {
@@ -150,8 +149,8 @@ describe("KippuEventsCalls", async () => {
     });
 
     describe("sales -> ongoing", async () => {
-      let ALICE: TickettoClient<KreivoTx>;
-      let BOB: TickettoClient<KreivoTx>;
+      let ALICE: TickettoClient;
+      let BOB: TickettoClient;
 
       before(async () => {
         ALICE = await getTickettoClient(
@@ -201,8 +200,8 @@ describe("KippuEventsCalls", async () => {
     describe("ongoing -> finished", () => {
       const SHORT_LIVED_EVENT: DateRange = [NOW - HOUR, NOW];
 
-      let ALICE: TickettoClient<KreivoTx>;
-      let BOB: TickettoClient<KreivoTx>;
+      let ALICE: TickettoClient;
+      let BOB: TickettoClient;
       let eventId: EventId;
       before(async () => {
         ALICE = await getTickettoClient(

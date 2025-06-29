@@ -1,6 +1,6 @@
 {
   "name": "@kippurocks/libticketto-papi",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Kippu implementation of The Ticketto Protocol with Polkadot-API",
   "type": "module",
   "license": "MIT",

@@ -23,7 +23,7 @@ describe("KippuTicketsCalls", async () => {
   });
 
   describe("issue", async () => {
-    let ALICE: TickettoClient<KreivoTx>;
+    let ALICE: TickettoClient;
     before(async () => {
       ALICE = await getTickettoClient(
         client,
@@ -72,9 +72,9 @@ describe("KippuTicketsCalls", async () => {
         ))!;
     });
 
-    let ALICE: TickettoClient<KreivoTx>;
-    let BOB: TickettoClient<KreivoTx>;
-    let CHARLIE: TickettoClient<KreivoTx>;
+    let ALICE: TickettoClient;
+    let BOB: TickettoClient;
+    let CHARLIE: TickettoClient;
     beforeEach(async () => {
       ALICE = await getTickettoClient(
         client,

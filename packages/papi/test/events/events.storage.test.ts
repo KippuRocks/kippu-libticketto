@@ -1,4 +1,3 @@
-import { KreivoApi, KreivoTx } from "../../src/types.ts";
 import { after, before, describe, it } from "node:test";
 import { getChopsticksClient, prepare } from "../support/prepare/index.ts";
 
@@ -9,25 +8,19 @@ import { createEvent } from "../support/helpers/create-event.ts";
 import { getProviderFromSigner } from "../support/helpers/get-provider-from-signer.ts";
 import { getTickettoClient } from "../support/helpers/get-ticketto-client.ts";
 import { keyring } from "../support/helpers/dev-keyrring.ts";
-import { kreivo } from "@polkadot-api/descriptors";
 
 // Note: For simplicity, we omit the `get` method, as it's already heavily used in the `KippuEventCalls` suite, as well as within
 // this same suite.
 
 describe("KippuEventsStorage", async () => {
   let client: PolkadotClient;
-  let kreivoApi: KreivoApi;
   let teardown: () => Promise<void>;
 
-  let ALICE: TickettoClient<KreivoTx>;
-  let BOB: TickettoClient<KreivoTx>;
-  let CHARLIE: TickettoClient<KreivoTx>;
-  let merchantId: number;
+  let ALICE: TickettoClient;
+  let BOB: TickettoClient;
   before(async () => {
     ({ client, teardown } = await getChopsticksClient());
     await prepare(client);
-
-    kreivoApi = client.getTypedApi(kreivo);
 
     ALICE = await getTickettoClient(
       client,
@@ -36,10 +29,6 @@ describe("KippuEventsStorage", async () => {
     BOB = await getTickettoClient(
       client,
       getProviderFromSigner(keyring.Bob.signer)
-    );
-    CHARLIE = await getTickettoClient(
-      client,
-      getProviderFromSigner(keyring.Charlie.signer)
     );
   });
 
@@ -70,7 +59,7 @@ describe("KippuEventsStorage", async () => {
 
     assert(
       (await BOB.tickets.query.ticketHolderOf(keyring.Alice.address)).length ==
-        1
+      1
     );
     assert(
       (await BOB.tickets.query.ticketHolderOf(keyring.Bob.address)).length == 0

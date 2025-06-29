@@ -1,11 +1,10 @@
 import { DAY, NOW } from "../fixtures/constants.ts";
 
 import { EVENT } from "../fixtures/events.ts";
-import { KreivoTx } from "../../../src/types.ts";
 import { TickettoClient } from "@ticketto/protocol";
 
 export async function createEvent(
-  tickettoClient: TickettoClient<KreivoTx>,
+  tickettoClient: TickettoClient,
   ix: number,
   bumpToSales = false
 ) {

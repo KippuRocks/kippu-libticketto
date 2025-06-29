@@ -54,7 +54,7 @@ describe("KippuPAPIConsumer", async () => {
     };
 
     // Initialize the ticketto client.
-    const tickettoClient = await new TickettoClientBuilder<KreivoTx>()
+    const tickettoClient = await new TickettoClientBuilder()
       .withConsumer(KippuPAPIConsumer)
       .withConfig(config)
       .build();

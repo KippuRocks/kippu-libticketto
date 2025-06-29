@@ -21,8 +21,7 @@ import { TransactionSubmitter } from "./submitter.ts";
 import { createInkSdk } from "@polkadot-api/sdk-ink";
 
 export class KippuPAPIConsumer
-  implements TickettoConsumer<KreivoTx, KippuConfig>
-{
+  implements TickettoConsumer<KippuConfig> {
   private container = new Container();
 
   constructor() {
@@ -99,6 +98,6 @@ export class KippuPAPIConsumer
         query: this.container.get(KippuTicketsStorage),
       },
       systemEvents: this.container.get(WebStubEventSubscribtion),
-    } as TickettoClient<KreivoTx>;
+    } as TickettoClient;
   }
 }

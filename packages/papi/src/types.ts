@@ -45,9 +45,23 @@ export type EventsContract = ReturnType<EventsSdk["getContract"]>;
 export type TicketsContract = ReturnType<TicketsSdk["getContract"]>;
 
 // Kippu Config
+export type KreivoApiCall = ReturnType<KreivoApi["txFromCallData"]>;
+export type EventsContractCall = ReturnType<EventsContract["send"]>;
+export type TicketsContractCall = ReturnType<TicketsContract["send"]>;
+
+export function isKreivoTx(value: unknown): value is KreivoTx {
+  return value !== undefined
+    && value !== null
+    && typeof value === "object"
+    && "sign" in value
+    && typeof value.sign === "function";
+}
+
 export type KreivoTx =
-  | ReturnType<KreivoApi["txFromCallData"]>
-  | ReturnType<EventsContract["send"]>;
+  | KreivoApiCall
+  | EventsContractCall
+  | TicketsContractCall
+
 export type KippuConsumerSettings = {
   client: PolkadotClient;
   apiEndpoint: string;
@@ -57,7 +71,7 @@ export type KippuConsumerSettings = {
   merchantId?: number;
 };
 export type KippuConfig = Required<
-  ClientConfig<KreivoTx, KippuConsumerSettings>
+  ClientConfig<KippuConsumerSettings>
 >;
 export type KippuAccountProvider = KippuConfig["accountProvider"];
 
@@ -101,11 +115,11 @@ export type TickettoAssetId = Enum<{
       };
     }>;
     child?:
-      | {
-          id: number;
-          pallet: number;
-          index: number;
-        }
-      | undefined;
+    | {
+      id: number;
+      pallet: number;
+      index: number;
+    }
+    | undefined;
   };
 }>;
