@@ -6,10 +6,21 @@ by [Polkadot-API][3]. It leverages on an external signature mechanism (provided 
 ## Usage
 
 ```ts
-import { VirtoSigner, kreivoBlockChallenger } from "@virtonetwork/signer";
-import { WebAuthn } from "@virtonetwork/authenticatorss-webauthn";
+import { createClient } from "polkadot-api";
+import { getWsProvider } from "polkadot-api/ws-provider/web";
+import { KreivoPassSigner, kreivoBlockChallenger } from "@virtonetwork/signer";
+import { WebAuthn } from "@virtonetwork/authenticators-webauthn";
+import { TickettoClientBuilder } from "@libticketto/protocol";
+import {
+  KippuAccountProvider,
+  KippuPAPIConsumer,
+  isKreivoTx,
+} from "@kippurocks/libticketto-papi";
 
 // Setup the app authenticator.
+const client = createClient(
+  getWsProvider("wss://kreivo.kippu.rocks")
+);
 const authenticator = new WebAuthn("rick@kippu.rocks", kreivoBlockChallenger)
   .setup();
 const signer = new KreivoPassSigner(authenticator);
@@ -18,13 +29,22 @@ const signer = new KreivoPassSigner(authenticator);
 const client = await new TickettoClientBuilder()
   .withConsumer(KippuPAPIConsumer)
   .withConfig({
-    chainEndpoint: "wss://kreivo.kippu.rocks",
-    kippuApi: "https://api.kippu.rocks",
+    client,
+    apiEndpoint: "https://api.kippu.rocks",
     accountProvider: {
       getAccountId() {
         AccountId(signer.publicKey)
       }
-    }
+      sign<T>(payload: T) {
+        if (!isKreivoTx(payload)) {
+          throw new Error("Cannot sign payload");
+        }
+
+        return Binary.fromHex(
+          await payload.sign(signer)
+        ).asBytes();
+      }
+    } as KippuAccountProvider,
   })
   .build();
 

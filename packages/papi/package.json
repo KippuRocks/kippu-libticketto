@@ -1,6 +1,6 @@
 {
   "name": "@kippurocks/libticketto-papi",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Kippu implementation of The Ticketto Protocol with Polkadot-API",
   "type": "module",
   "license": "MIT",
@@ -54,10 +54,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/kippurocks/libticketto.git"
+    "url": "git+ssh://git@github.com/kippurocks/kippu-libticketto.git"
   },
   "bugs": {
-    "url": "https://github.com/kippurocks/libticketto/issues"
+    "url": "https://github.com/kippurocks/kippu-libticketto/issues"
   },
   "devDependencies": {
     "@acala-network/chopsticks-core": "^1.1.0",
