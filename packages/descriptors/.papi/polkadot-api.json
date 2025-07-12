@@ -1,18 +1,21 @@
 {
   "version": 0,
   "descriptorPath": ".papi/descriptors",
+  "options": {
+    "noDescriptorsPackage": true
+  },
   "entries": {
     "kusama": {
       "chain": "ksmcc3",
       "metadata": ".papi/metadata/kusama.scale",
       "genesis": "0xb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
-      "codeHash": "0xf45689276dfdcf05b6defd26da68e3283a96190d789f7a311ff31f64b455b421"
+      "codeHash": "0x4c843d1c1b5ce542fcc0e9cc1439ad3384e5753da24d2747c4aa24162a202449"
     },
     "kreivo": {
       "wsUrl": "wss://testnet.kreivo.kippu.rocks",
       "metadata": ".papi/metadata/kreivo.scale",
       "genesis": "0x01e7bae209a0aca689290df74cd5b4b98b47a4099ed12caec294f560ff02e9c0",
-      "codeHash": "0x21bd46cb22e6be5be1ad5150dfebc3ef928e4501bc098ffb863e6d274ff50026"
+      "codeHash": "0x6343debb679b032e3be4f60c8637acf97b10321aa8790ea6feb094e2f18f41bd"
     }
   },
   "ink": {
