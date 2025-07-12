@@ -1,11 +1,11 @@
 {
-  "version": "0.0.1",
+  "version": "0.0.2",
   "name": "@kippurocks/papi-descriptors",
   "files": [
     "dist/*"
   ],
   "scripts": {
-    "postinstall": "papi && npm run clean && mkdir dist && cp -r dist/* dist",
+    "postinstall": "papi; npm run clean; mkdir dist && cp -rf .papi/descriptors/dist/* dist",
     "clean": "rm -rf dist"
   },
   "exports": {
