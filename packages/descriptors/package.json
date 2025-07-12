@@ -1,0 +1,31 @@
+{
+  "version": "0.0.1",
+  "name": "@kippurocks/papi-descriptors",
+  "files": [
+    "dist/*"
+  ],
+  "scripts": {
+    "postinstall": "papi && npm run clean && mkdir dist && cp -r dist/* dist",
+    "clean": "rm -rf dist"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "module": "./dist/index.mjs",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "browser": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "peerDependencies": {
+    "polkadot-api": ">=1.11.2"
+  },
+  "dependencies": {
+    "@polkadot-api/descriptors": "file:.papi/descriptors"
+  }
+}
