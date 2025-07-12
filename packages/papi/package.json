@@ -1,11 +1,10 @@
 {
   "name": "@kippurocks/libticketto-papi",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "A Kippu implementation of The Ticketto Protocol with Polkadot-API",
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "postinstall": "papi",
     "build": "tsc && tsc -p ./tsconfig.cjs.json",
     "prepack": "npm run build",
     "test": "LOG_LEVEL=warn tsx --test --test-force-exit 'test/**/*.test.ts'",
@@ -43,7 +42,7 @@
     "url": "https://pablodorado.com"
   },
   "dependencies": {
-    "@polkadot-api/descriptors": "file:.papi/descriptors",
+    "@kippurocks/papi-descriptors": "0.0.1",
     "@polkadot-api/sdk-ink": "^0.0.1-1",
     "@polkadot-labs/hdkd-helpers": "^0.0.16",
     "@ticketto/protocol": "^1.5.0",

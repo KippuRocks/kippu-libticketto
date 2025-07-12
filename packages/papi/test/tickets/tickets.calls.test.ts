@@ -1,5 +1,5 @@
 import { KreivoApi, KreivoTx } from "../../src/types.ts";
-import { MultiAddress, kreivo } from "@polkadot-api/descriptors";
+import { MultiAddress, kreivo } from "@kippurocks/papi-descriptors";
 import { SupportChopsticksClient, getChopsticksClient, prepare } from "../support/prepare/index.ts";
 import { after, before, beforeEach, describe, it } from "node:test";
 

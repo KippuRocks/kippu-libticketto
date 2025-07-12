@@ -8,7 +8,7 @@ import { KippuPAPIConsumer } from "../src/index.ts";
 import { TickettoClientBuilder } from "@ticketto/protocol";
 import { WebAuthn } from "@virtonetwork/authenticators-webauthn";
 import assert from "node:assert";
-import { kreivo } from "@polkadot-api/descriptors";
+import { kreivo } from "@kippurocks/papi-descriptors";
 import { mockWebAuthnEmulation } from "./support/helpers/webauthn-mock.ts";
 import { ss58Encode } from "@polkadot-labs/hdkd-helpers";
 

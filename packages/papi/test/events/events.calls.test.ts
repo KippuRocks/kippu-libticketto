@@ -10,7 +10,7 @@ import { TickettoClient } from "@ticketto/protocol";
 import assert from "node:assert";
 import { getProviderFromSigner } from "../support/helpers/get-provider-from-signer.ts";
 import { getTickettoClient } from "../support/helpers/get-ticketto-client.ts";
-import { kreivo } from "@polkadot-api/descriptors";
+import { kreivo } from "@kippurocks/papi-descriptors";
 
 const TODAY_EVENT: DateRange = [NOW, NOW + DAY];
 const TOMORROW_EVENT: DateRange = [NOW + DAY, NOW + 2n * DAY];

@@ -13,7 +13,7 @@ import { KippuConfig, TOKEN } from "./types.ts";
 import { KippuDirectoryCalls, KippuDirectoryStorage } from "./directory.ts";
 import { KippuEventsCalls, KippuEventsStorage } from "./events.ts";
 import { KippuTicketsCalls, KippuTicketsStorage } from "./tickets.ts";
-import { contracts, kreivo } from "@polkadot-api/descriptors";
+import { contracts, kreivo } from "@kippurocks/papi-descriptors";
 
 import { Container } from "inversify";
 import { TickettoModelConverter } from "./tickettoModel.ts";

@@ -3,7 +3,7 @@ import { PolkadotClient, TypedApi } from "polkadot-api";
 import { AccountId } from "@ticketto/types";
 import { ClientConfig } from "@ticketto/protocol";
 import { Enum } from "@polkadot-api/substrate-bindings";
-import { contracts, kreivo } from "@polkadot-api/descriptors";
+import { contracts, kreivo } from "@kippurocks/papi-descriptors";
 import { createInkSdk, InkSdkTypedApi } from "@polkadot-api/sdk-ink";
 
 export async function currency(client: PolkadotClient) {

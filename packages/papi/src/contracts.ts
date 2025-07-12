@@ -5,7 +5,7 @@ import {
 } from "./types.ts";
 import { InkSdkTypedApi, createInkSdk } from "@polkadot-api/sdk-ink";
 
-import { contracts } from "@polkadot-api/descriptors";
+import { contracts } from "@kippurocks/papi-descriptors";
 
 export function getContracts(
   settings: KippuConsumerSettings,
