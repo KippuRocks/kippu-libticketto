@@ -13,6 +13,7 @@
     "packages/*"
   ],
   "scripts": {
+    "postinstall": "npm run prepack -w packages/descriptors",
     "build": "npm run build --workspaces --if-present",
     "predocs": "npm run build",
     "docs": "typedoc",
