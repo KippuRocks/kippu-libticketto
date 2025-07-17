@@ -10,6 +10,7 @@ import {
 import { TransactionSubmitter } from "./submitter.ts";
 import { Binary } from "polkadot-api";
 import { TickettoModelConverter } from "./tickettoModel.ts";
+import { Gas } from "@polkadot-api/sdk-ink";
 
 export class KippuTicketsCalls implements TicketsCalls {
   constructor(
@@ -19,7 +20,7 @@ export class KippuTicketsCalls implements TicketsCalls {
     @inject(TOKEN.TICKETS_CONTRACT) private readonly tickets: TicketsContract,
     @inject(TOKEN.SUBMITTER) private readonly submitter: TransactionSubmitter,
     @inject(TOKEN.MERCHANT_ID) private readonly merchantId: number
-  ) {}
+  ) { }
 
   async issue(eventId: EventId) {
     const result = await this.tickets.query("issue_ticket", {
@@ -172,7 +173,7 @@ export class KippuTicketsStorage implements TicketsStorage {
     @inject(TOKEN.MERCHANT_ID) private readonly merchantId: number,
     @inject(TickettoModelConverter)
     private readonly converter: TickettoModelConverter
-  ) {}
+  ) { }
 
   async get(eventId: EventId, id: TicketId) {
     const response = await this.tickets.query("get", {
@@ -204,9 +205,9 @@ export class KippuTicketsStorage implements TicketsStorage {
       },
       price: ticket.price
         ? {
-            amount: ticket.price.amount,
-            asset: await this.converter.assetMetadata(ticket.price.asset),
-          }
+          amount: ticket.price.amount,
+          asset: await this.converter.assetMetadata(ticket.price.asset),
+        }
         : undefined,
     } as Ticket;
   }
@@ -226,9 +227,9 @@ export class KippuTicketsStorage implements TicketsStorage {
     const items =
       eventId !== undefined
         ? await this.api.query.ListingsCatalog.Account.getEntries(who, [
-            this.merchantId,
-            eventId,
-          ])
+          this.merchantId,
+          eventId,
+        ])
         : await this.api.query.ListingsCatalog.Account.getEntries(who);
 
     return Promise.all(
@@ -269,8 +270,10 @@ export class KippuTicketsStorage implements TicketsStorage {
     // already too small.
     //
     // TODO: Ideally, sign this using the offline signer.
-    const { normal: gasLimit } =
-      await this.api.query.System.BlockWeight.getValue();
+    const gasLimit: Gas = {
+      ref_time: 603608583n,
+      proof_size: 62239n,
+    };
 
     return this.submitter.signTx(
       this.tickets.send("mark_attendance", {

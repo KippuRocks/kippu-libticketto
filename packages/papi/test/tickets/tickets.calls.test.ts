@@ -1,8 +1,8 @@
-import { KreivoApi, KreivoTx } from "../../src/types.ts";
 import { MultiAddress, kreivo } from "@kippurocks/papi-descriptors";
 import { SupportChopsticksClient, getChopsticksClient, prepare } from "../support/prepare/index.ts";
 import { after, before, beforeEach, describe, it } from "node:test";
 
+import { KreivoApi } from "../../src/types.ts";
 import { TickettoClient } from "@ticketto/protocol";
 import assert from "node:assert";
 import { contractRevertedError } from "../support/fixtures/tickets.ts";
@@ -14,11 +14,9 @@ import { keyring } from "../support/helpers/dev-keyrring.ts";
 describe("KippuTicketsCalls", async () => {
   let client: SupportChopsticksClient["client"];
   let teardown: SupportChopsticksClient["teardown"];
-  let setRuntimeLogLevel: SupportChopsticksClient["setRuntimeLogLevel"];
-  let setLogLevel: SupportChopsticksClient["setLogLevel"];
 
   before(async () => {
-    ({ client, teardown, setRuntimeLogLevel, setLogLevel } = await getChopsticksClient());
+    ({ client, teardown } = await getChopsticksClient());
     await prepare(client);
   });
 
@@ -137,30 +135,47 @@ describe("KippuTicketsCalls", async () => {
       );
 
       await CHARLIE.tickets.calls.submitAttendanceCall(attendanceCallBytes);
+      await new Promise((r) => setTimeout(r, 2_000));
     });
 
-    it.only("fails if the attendance is already marked", async () => {
+    it.only("fails resending the same attendance call", async () => {
       const eventId = await createEvent(ALICE, 1, true);
       const ticketId = await ALICE.tickets.calls.issue(eventId);
+
       await BOB.events.calls.bumpState(eventId);
+      (await BOB.events.query.get(eventId))?.state === 2;
 
       const attendanceCallBytes = await ALICE.tickets.query.attendanceRequest(
         eventId,
         ticketId
       );
-
       await CHARLIE.tickets.calls.submitAttendanceCall(attendanceCallBytes);
+      await new Promise((r) => setTimeout(r, 2_000));
 
+      await assert.rejects(
+        CHARLIE.tickets.calls.submitAttendanceCall(attendanceCallBytes),
+        { message: "InvalidTransaction" }
+      );
+    });
 
-      setLogLevel("trace");
-      setRuntimeLogLevel(5);
+    it.only("fails if the attendance is already marked", async () => {
+      const eventId = await createEvent(ALICE, 1, true);
+      const ticketId = await ALICE.tickets.calls.issue(eventId);
+
+      await BOB.events.calls.bumpState(eventId);
+      (await BOB.events.query.get(eventId))?.state === 2;
+
+      const attendanceCallBytes = await ALICE.tickets.query.attendanceRequest(
+        eventId,
+        ticketId
+      );
+      await CHARLIE.tickets.calls.submitAttendanceCall(attendanceCallBytes);
+      await new Promise((r) => setTimeout(r, 2_000));
+
       const secondAttendanceCallBytes = await ALICE.tickets.query.attendanceRequest(
         eventId,
         ticketId
       );
-      setLogLevel("error");
-      setRuntimeLogLevel(1);
-
       await assert.rejects(
         CHARLIE.tickets.calls.submitAttendanceCall(secondAttendanceCallBytes),
         contractRevertedError

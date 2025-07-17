@@ -22,6 +22,9 @@ import { createInkSdk } from "@polkadot-api/sdk-ink";
 
 export {
   isKreivoTx,
+} from "./types.ts";
+
+export type {
   KreivoTx,
   KippuConsumerSettings,
   KippuConfig,
