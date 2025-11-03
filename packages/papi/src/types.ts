@@ -2,7 +2,7 @@ import { PolkadotClient, TypedApi } from "polkadot-api";
 
 import { AccountId } from "@ticketto/types";
 import { ClientConfig } from "@ticketto/protocol";
-import { Enum } from "@polkadot-api/substrate-bindings";
+import { Enum, SS58String } from "@polkadot-api/substrate-bindings";
 import { contracts, kreivo } from "@kippurocks/papi-descriptors";
 import { createInkSdk, InkSdkTypedApi } from "@polkadot-api/sdk-ink";
 
@@ -50,29 +50,30 @@ export type EventsContractCall = ReturnType<EventsContract["send"]>;
 export type TicketsContractCall = ReturnType<TicketsContract["send"]>;
 
 export function isKreivoTx(value: unknown): value is KreivoTx {
-  return value !== undefined
-    && value !== null
-    && typeof value === "object"
-    && "sign" in value
-    && typeof value.sign === "function";
+  return (
+    value !== undefined &&
+    value !== null &&
+    typeof value === "object" &&
+    "sign" in value &&
+    typeof value.sign === "function"
+  );
 }
 
-export type KreivoTx =
-  | KreivoApiCall
-  | EventsContractCall
-  | TicketsContractCall
+export type KreivoTx = KreivoApiCall | EventsContractCall | TicketsContractCall;
 
 export type KippuConsumerSettings = {
   client: PolkadotClient;
-  apiEndpoint: string;
+  api: {
+    endpoint: string;
+    clientId: string;
+    clientSecret: string;
+  };
   eventsContractAddress: AccountId;
   ticketsContractAddress: AccountId;
   storeId?: number;
   merchantId?: number;
 };
-export type KippuConfig = Required<
-  ClientConfig<KippuConsumerSettings>
->;
+export type KippuConfig = Required<ClientConfig<KippuConsumerSettings>>;
 export type KippuAccountProvider = KippuConfig["accountProvider"];
 
 export enum TOKEN {
@@ -115,11 +116,25 @@ export type TickettoAssetId = Enum<{
       };
     }>;
     child?:
-    | {
-      id: number;
-      pallet: number;
-      index: number;
-    }
-    | undefined;
+      | {
+          id: number;
+          pallet: number;
+          index: number;
+        }
+      | undefined;
   };
 }>;
+
+export type CredentialId = string;
+
+export type KippuApiUser = {
+  username: string;
+  contact: KippuApiContact;
+  credentials: CredentialId[];
+};
+
+export type KippuApiContact = {
+  name: string;
+  email: string;
+  accountId: SS58String;
+};

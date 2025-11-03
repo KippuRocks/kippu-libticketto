@@ -1,49 +1,25 @@
-import { Account, AccountId, AccountIdentity } from "@ticketto/types";
+import { Account, AccountId } from "@ticketto/types";
 import { DirectoryCalls, DirectoryStorage } from "@ticketto/protocol";
 import { inject, injectable } from "inversify";
-import { KippuConsumerSettings, TOKEN } from "./types.ts";
+import {
+  KippuApiContact,
+  KippuApiUser,
+  KippuConsumerSettings,
+  TOKEN,
+} from "./types.ts";
 
+// Note: It is expected that directory calls are handled internally by the
+// applications. This connection is only for reads.
 @injectable()
 export class KippuDirectoryCalls implements DirectoryCalls {
-  private url: URL;
-  private byAccount: (id: AccountId) => URL;
+  constructor() {}
 
-  constructor(
-    @inject(TOKEN.SETTINGS) private readonly settings: KippuConsumerSettings
-  ) {
-    this.url = new URL("/directory", this.settings.apiEndpoint);
-    this.byAccount = (accountId: AccountId) =>
-      new URL(`/directory/${accountId}`, this.settings.apiEndpoint);
+  async insert() {
+    throw new Error("Method not implemented");
   }
 
-  async processRequest(response: Response) {
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-  }
-
-  async insert(accountId: AccountId, identity: AccountIdentity): Promise<void> {
-    return this.processRequest(
-      await fetch(this.url, {
-        method: "POST",
-        body: JSON.stringify({
-          accountId,
-          identity,
-        }),
-      })
-    );
-  }
-
-  async setIdentity(
-    accountId: AccountId,
-    identity: Partial<AccountIdentity>
-  ): Promise<void> {
-    return this.processRequest(
-      await fetch(this.byAccount(accountId), {
-        method: "PUT",
-        body: JSON.stringify({ identity }),
-      })
-    );
+  async setIdentity() {
+    throw new Error("Method not implemented");
   }
 }
 
@@ -56,12 +32,12 @@ export class KippuDirectoryStorage implements DirectoryStorage {
     @inject(TOKEN.SETTINGS) private readonly settings: KippuConsumerSettings
   ) {
     this.url = (params: Record<string, string> = {}) => {
-      let url = new URL("/directory", this.settings.apiEndpoint);
+      let url = new URL("/contacts", this.settings.api.endpoint);
       url.search = new URLSearchParams(params).toString();
       return url;
     };
     this.byAccount = (accountId: AccountId) =>
-      new URL(`/directory/${accountId}`, this.settings.apiEndpoint);
+      new URL(`/user/${accountId}`, this.settings.api.endpoint);
   }
 
   private async processRequest<T>(url: () => URL): Promise<T | undefined> {
@@ -78,30 +54,91 @@ export class KippuDirectoryStorage implements DirectoryStorage {
   }
 
   async all() {
-    return this.processRequest<Account[]>(() => this.url()).then(
-      (r) => r ?? []
+    return this.processRequest<KippuApiContact[]>(() => this.url()).then((r) =>
+      (r ?? []).map((contact) => {
+        return {
+          id: contact.accountId,
+          assets: {},
+          balance: {},
+          identity: {
+            email: contact.email,
+            firstName: contact.name,
+          },
+        } as Account;
+      })
     );
   }
 
   async indexByDisplay(display: string) {
-    return this.processRequest<Account[]>(() => this.url({ display })).then(
-      (r) => r ?? []
+    return this.processRequest<KippuApiContact[]>(() =>
+      this.url({ by: display })
+    ).then((r) =>
+      (r ?? []).map((contact) => {
+        return {
+          id: contact.accountId,
+          assets: {},
+          balance: {},
+          identity: {
+            email: contact.email,
+            firstName: contact.name,
+          },
+        } as Account;
+      })
     );
   }
 
   async indexByPhone(phone: string) {
-    return this.processRequest<Account[]>(() => this.url({ phone })).then(
-      (r) => r ?? []
+    return this.processRequest<KippuApiContact[]>(() =>
+      this.url({ by: phone })
+    ).then((r) =>
+      (r ?? []).map((contact) => {
+        return {
+          id: contact.accountId,
+          assets: {},
+          balance: {},
+          identity: {
+            email: contact.email,
+            firstName: contact.name,
+          },
+        } as Account;
+      })
     );
   }
 
   async indexByEmail(email: string) {
-    return this.processRequest<Account[]>(() => this.url({ email })).then(
-      (r) => r ?? []
+    return this.processRequest<KippuApiContact[]>(() =>
+      this.url({ by: email })
+    ).then((r) =>
+      (r ?? []).map((contact) => {
+        return {
+          id: contact.accountId,
+          assets: {},
+          balance: {},
+          identity: {
+            email: contact.email,
+            firstName: contact.name,
+          },
+        } as Account;
+      })
     );
   }
 
   async get(accountId: AccountId) {
-    return this.processRequest<Account>(() => this.byAccount(accountId));
+    return this.processRequest<KippuApiUser>(() =>
+      this.byAccount(accountId)
+    ).then((user) => {
+      return user
+        ? ({
+            id: user.contact.accountId,
+            assets: {},
+            balance: {},
+            identity: {
+              display: user.username,
+              email: user.contact.email,
+              firstName: user.contact.name,
+            },
+          } as Account)
+        : undefined;
+    });
   }
 }

@@ -31,7 +31,7 @@ export class KippuEventsCalls implements EventsCalls {
     @inject(TOKEN.POLKADOT_CLIENT) private readonly client: PolkadotClient,
     @inject(TOKEN.EVENTS_CONTRACT) private readonly contract: EventsContract,
     @inject(TOKEN.SUBMITTER) private readonly submitter: TransactionSubmitter
-  ) { }
+  ) {}
 
   private intoContractAttendancePolicy(
     attendancePolicy: AttendancePolicy
@@ -124,25 +124,25 @@ export class KippuEventsCalls implements EventsCalls {
       maybe_capacity: event.capacity ? BigInt(event.capacity) : undefined,
       maybe_ticket_class: event.class
         ? {
-          attendance_policy: this.intoContractAttendancePolicy(
-            event.class.attendancePolicy
-          ),
-          price: {
-            asset: {
-              type: "Sibling",
-              value: {
-                id: 1000, // Asset Hub
-                pallet: 50, // pallet_assets
-                index: event.class.ticketprice.asset.id,
+            attendance_policy: this.intoContractAttendancePolicy(
+              event.class.attendancePolicy
+            ),
+            price: {
+              asset: {
+                type: "Sibling",
+                value: {
+                  id: 1000, // Asset Hub
+                  pallet: 50, // pallet_assets
+                  index: event.class.ticketprice.asset.id,
+                },
               },
+              amount: BigInt(event.class.ticketprice.amount),
             },
-            amount: BigInt(event.class.ticketprice.amount),
-          },
-          maybe_restrictions: {
-            cannot_resale: event.class.ticketRestrictions.cannotResale,
-            cannot_transfer: event.class.ticketRestrictions.cannotTransfer,
-          },
-        }
+            maybe_restrictions: {
+              cannot_resale: event.class.ticketRestrictions.cannotResale,
+              cannot_transfer: event.class.ticketRestrictions.cannotTransfer,
+            },
+          }
         : undefined,
       maybe_dates: event.dates,
     };
@@ -210,7 +210,7 @@ export class KippuEventsStorage implements EventsStorage {
     @inject(TickettoModelConverter)
     private readonly converter: TickettoModelConverter,
     @inject(TOKEN.MERCHANT_ID) private readonly merchantId: number
-  ) { }
+  ) {}
 
   async get(id: EventId): Promise<Event | undefined> {
     const response = await this.contract.query("get", {

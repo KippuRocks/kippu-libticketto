@@ -1,4 +1,4 @@
-import { KippuConfig, KreivoTx } from "../src/types.ts";
+import { KippuConfig, isKreivoTx } from "../src/types.ts";
 import { KreivoPassSigner, blockHashChallenger } from "@virtonetwork/signer";
 import { after, before, describe, it } from "node:test";
 import { getChopsticksClient, prepare } from "./support/prepare/index.ts";
@@ -41,13 +41,20 @@ describe("KippuPAPIConsumer", async () => {
         getAccountId() {
           return ss58Encode(signer.publicKey);
         },
-        async sign(payload: KreivoTx): Promise<Uint8Array> {
+        async sign<S>(payload: S): Promise<Uint8Array> {
+          if (!isKreivoTx(payload)) {
+            throw new Error("Cannot sign a non-kreivo compatible transaction");
+          }
           return Binary.fromHex(await payload.sign(signer)).asBytes();
         },
       },
       consumerSettings: {
         client,
-        apiEndpoint: "https://api.kippu.rocks",
+        api: {
+          endpoint: "https://api.kippu.rocks",
+          clientId: ":clientId:",
+          clientSecret: ":clientSecret:",
+        },
         eventsContractAddress: eventsContractAddress,
         ticketsContractAddress: ticketsContractAddress,
       },
