@@ -9,13 +9,13 @@
       "chain": "ksmcc3",
       "metadata": ".papi/metadata/kusama.scale",
       "genesis": "0xb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe",
-      "codeHash": "0x4c843d1c1b5ce542fcc0e9cc1439ad3384e5753da24d2747c4aa24162a202449"
+      "codeHash": "0xd905ea233b779dfae428febc319661bbcc0ee861dcec336d18e5a3dc6ee667f6"
     },
     "kreivo": {
-      "wsUrl": "wss://testnet.kreivo.kippu.rocks",
+      "wsUrl": "wss://kreivo.kippu.rocks",
       "metadata": ".papi/metadata/kreivo.scale",
-      "genesis": "0x01e7bae209a0aca689290df74cd5b4b98b47a4099ed12caec294f560ff02e9c0",
-      "codeHash": "0x6343debb679b032e3be4f60c8637acf97b10321aa8790ea6feb094e2f18f41bd"
+      "genesis": "0xc710a5f16adc17bcd212cff0aedcbf1c1212a043cdc0fb2dcba861efe5305b01",
+      "codeHash": "0x601b471721a227a6c85670619de9cecbe9faf98f3c4901b7e65785c3c28e0760"
     }
   },
   "ink": {
