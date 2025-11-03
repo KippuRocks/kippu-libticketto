@@ -69,7 +69,9 @@ export class TickettoModelConverter {
   }
 
   async assetMetadata(id: TickettoAssetId): Promise<LineItemPrice["asset"]> {
-    const assetMetadata = await this.api.query.Assets.Metadata.getValue(id);
+    const assetMetadata = await this.api.query.Assets.Metadata.getValue(id, {
+      at: "best",
+    });
 
     if (!assetMetadata) {
       throw new Error("AssetNotFound");

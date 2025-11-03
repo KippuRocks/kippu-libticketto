@@ -240,17 +240,22 @@ describe("KippuEventsCalls", async () => {
         // Wait until the event finishes.
         const kreivoApi = client.getTypedApi(kreivo);
         const [, eventEndsAt] = SHORT_LIVED_EVENT;
-        const blockTimestamp = await kreivoApi.query.Timestamp.Now.getValue();
+        const blockTimestamp = await kreivoApi.query.Timestamp.Now.getValue({
+          at: "best",
+        });
 
         if (eventEndsAt > blockTimestamp) {
-          const remainingBlocks = (eventEndsAt - blockTimestamp) / (6n * SECOND);
+          const remainingBlocks =
+            (eventEndsAt - blockTimestamp) / (6n * SECOND);
 
           await client._request("dev_newBlock", [
             { count: Number(remainingBlocks) + 1 },
           ]);
         }
 
-        const nowBlockTimestamp = await kreivoApi.query.Timestamp.Now.getValue();
+        const nowBlockTimestamp = await kreivoApi.query.Timestamp.Now.getValue({
+          at: "best",
+        });
         assert(
           eventEndsAt <= nowBlockTimestamp,
           `Expected ${eventEndsAt} <= ${nowBlockTimestamp}`
@@ -260,4 +265,3 @@ describe("KippuEventsCalls", async () => {
     });
   });
 });
-

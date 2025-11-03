@@ -13,11 +13,17 @@ export async function getTickettoClient(
   const api = client.getTypedApi(kreivo);
 
   const eventsContractAddress =
-    await api.query.ContractsStore.ContractAccount.getValue([0, 0n]);
+    await api.query.ContractsStore.ContractAccount.getValue([0, 0n], {
+      at: "best",
+    });
   const ticketsContractAddress =
-    await api.query.ContractsStore.ContractAccount.getValue([1, 0n]);
-  const merchantId =
-    await api.query.ContractsStore.ContractMerchantId.getValue(eventsContractAddress!);
+    await api.query.ContractsStore.ContractAccount.getValue([1, 0n], {
+      at: "best",
+    });
+  const merchantId = await api.query.ContractsStore.ContractMerchantId.getValue(
+    eventsContractAddress!,
+    { at: "best" }
+  );
 
   return new TickettoClientBuilder()
     .withConsumer(KippuPAPIConsumer)

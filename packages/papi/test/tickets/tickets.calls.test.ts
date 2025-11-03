@@ -1,5 +1,9 @@
 import { MultiAddress, kreivo } from "@kippurocks/papi-descriptors";
-import { SupportChopsticksClient, getChopsticksClient, prepare } from "../support/prepare/index.ts";
+import {
+  SupportChopsticksClient,
+  getChopsticksClient,
+  prepare,
+} from "../support/prepare/index.ts";
 import { after, before, beforeEach, describe, it } from "node:test";
 
 import { KreivoApi } from "../../src/types.ts";
@@ -60,13 +64,14 @@ describe("KippuTicketsCalls", async () => {
     before(async () => {
       kreivoApi = client.getTypedApi(kreivo);
       const eventsContractAddress =
-        (await kreivoApi.query.ContractsStore.ContractAccount.getValue([
-          0,
-          0n,
-        ]))!;
+        (await kreivoApi.query.ContractsStore.ContractAccount.getValue(
+          [0, 0n],
+          { at: "best" }
+        ))!;
       merchantId =
         (await kreivoApi.query.ContractsStore.ContractMerchantId.getValue(
-          eventsContractAddress
+          eventsContractAddress,
+          { at: "best" }
         ))!;
     });
 
@@ -172,10 +177,8 @@ describe("KippuTicketsCalls", async () => {
       await CHARLIE.tickets.calls.submitAttendanceCall(attendanceCallBytes);
       await new Promise((r) => setTimeout(r, 2_000));
 
-      const secondAttendanceCallBytes = await ALICE.tickets.query.attendanceRequest(
-        eventId,
-        ticketId
-      );
+      const secondAttendanceCallBytes =
+        await ALICE.tickets.query.attendanceRequest(eventId, ticketId);
       await assert.rejects(
         CHARLIE.tickets.calls.submitAttendanceCall(secondAttendanceCallBytes),
         contractRevertedError

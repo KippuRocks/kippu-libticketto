@@ -29,11 +29,15 @@ describe("KippuPAPIConsumer", async () => {
     const signer = new KreivoPassSigner(authenticator);
 
     const eventsContractAddress =
-      await api.query.ContractsStore.ContractAccount.getValue([0, 0n]);
+      await api.query.ContractsStore.ContractAccount.getValue([0, 0n], {
+        at: "best",
+      });
     assert.ok(eventsContractAddress);
 
     const ticketsContractAddress =
-      await api.query.ContractsStore.ContractAccount.getValue([1, 0n]);
+      await api.query.ContractsStore.ContractAccount.getValue([1, 0n], {
+        at: "best",
+      });
     assert.ok(ticketsContractAddress);
 
     const config: KippuConfig = {

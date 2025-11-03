@@ -263,7 +263,8 @@ export class KippuEventsStorage implements EventsStorage {
   async all() {
     const events =
       await this.api.query.ListingsCatalog.CollectionAccount.getEntries(
-        this.eventsContractAddress
+        this.eventsContractAddress,
+        { at: "best" }
       );
 
     return Promise.all(
@@ -274,7 +275,8 @@ export class KippuEventsStorage implements EventsStorage {
   async organizerOf(who: AccountId): Promise<Event[]> {
     const events =
       await this.api.query.ListingsCatalog.CollectionAccount.getEntries(
-        this.eventsContractAddress
+        this.eventsContractAddress,
+        { at: "best" }
       );
 
     return Promise.all(
@@ -285,7 +287,9 @@ export class KippuEventsStorage implements EventsStorage {
   }
 
   async ticketHolderOf(who: AccountId): Promise<Event[]> {
-    const keys = await this.api.query.ListingsCatalog.Account.getEntries(who);
+    const keys = await this.api.query.ListingsCatalog.Account.getEntries(who, {
+      at: "best",
+    });
 
     return Promise.all(
       keys.map(({ keyArgs: [_, [m, eventId]] }) =>

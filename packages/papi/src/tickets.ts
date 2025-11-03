@@ -145,7 +145,9 @@ export class KippuTicketsCalls implements TicketsCalls {
   }
 
   async buy(issuer: EventId, id: TicketId) {
-    const orderId = await this.api.query.Orders.NextOrderId.getValue();
+    const orderId = await this.api.query.Orders.NextOrderId.getValue({
+      at: "best",
+    });
 
     // Quickly creates the cart. We'll figure out the process of handling the cart
     // in a further protocol extension.
@@ -217,10 +219,10 @@ export class KippuTicketsStorage implements TicketsStorage {
   }
 
   async all(eventId: EventId) {
-    const items = await this.api.query.ListingsCatalog.Item.getEntries([
-      this.merchantId,
-      eventId,
-    ]);
+    const items = await this.api.query.ListingsCatalog.Item.getEntries(
+      [this.merchantId, eventId],
+      { at: "best" }
+    );
 
     return Promise.all(
       items.map(({ keyArgs: [[, eventId], id] }) => this.get(eventId, id))
@@ -230,11 +232,14 @@ export class KippuTicketsStorage implements TicketsStorage {
   async ticketHolderOf(who: AccountId, eventId?: EventId) {
     const items =
       eventId !== undefined
-        ? await this.api.query.ListingsCatalog.Account.getEntries(who, [
-            this.merchantId,
-            eventId,
-          ])
-        : await this.api.query.ListingsCatalog.Account.getEntries(who);
+        ? await this.api.query.ListingsCatalog.Account.getEntries(
+            who,
+            [this.merchantId, eventId],
+            { at: "best" }
+          )
+        : await this.api.query.ListingsCatalog.Account.getEntries(who, {
+            at: "best",
+          });
 
     return Promise.all(
       items.map(({ keyArgs: [, [m, eventId], id] }) =>
