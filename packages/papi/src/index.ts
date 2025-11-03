@@ -9,6 +9,7 @@ import {
   TickettoConsumer,
 } from "@ticketto/protocol";
 import { EventQueue, WebStubEventSubscribtion } from "./subscriptions.ts";
+import { InkSdkTypedApi, createInkV5Sdk } from "@polkadot-api/sdk-ink";
 import { KippuConfig, TOKEN } from "./types.ts";
 import { KippuDirectoryCalls, KippuDirectoryStorage } from "./directory.ts";
 import { KippuEventsCalls, KippuEventsStorage } from "./events.ts";
@@ -18,11 +19,8 @@ import { contracts, kreivo } from "@kippurocks/papi-descriptors";
 import { Container } from "inversify";
 import { TickettoModelConverter } from "./tickettoModel.ts";
 import { TransactionSubmitter } from "./submitter.ts";
-import { createInkSdk } from "@polkadot-api/sdk-ink";
 
-export {
-  isKreivoTx,
-} from "./types.ts";
+export { isKreivoTx } from "./types.ts";
 
 export type {
   KreivoTx,
@@ -31,8 +29,7 @@ export type {
   KippuAccountProvider,
 } from "./types.ts";
 
-export class KippuPAPIConsumer
-  implements TickettoConsumer<KippuConfig> {
+export class KippuPAPIConsumer implements TickettoConsumer<KippuConfig> {
   private container = new Container();
 
   constructor() {
@@ -76,7 +73,10 @@ export class KippuPAPIConsumer
     this.container.bind(TickettoModelConverter).toSelf();
 
     // Initialize Events contract
-    const eventsSdk = createInkSdk(kreivoApi, contracts.tickettoEvents);
+    const eventsSdk = createInkV5Sdk(
+      kreivoApi as InkSdkTypedApi,
+      contracts.tickettoEvents
+    );
     this.container
       .bind(TOKEN.EVENTS_CONTRACT)
       .toConstantValue(
@@ -87,7 +87,10 @@ export class KippuPAPIConsumer
       .toConstantValue(consumerSettings.eventsContractAddress);
 
     // Initialize Tickets contract
-    const ticketsSdk = createInkSdk(kreivoApi, contracts.tickettoTickets);
+    const ticketsSdk = createInkV5Sdk(
+      kreivoApi as InkSdkTypedApi,
+      contracts.tickettoTickets
+    );
     this.container
       .bind(TOKEN.TICKETS_CONTRACT)
       .toConstantValue(

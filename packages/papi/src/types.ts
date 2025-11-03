@@ -4,7 +4,7 @@ import { AccountId } from "@ticketto/types";
 import { ClientConfig } from "@ticketto/protocol";
 import { Enum, SS58String } from "@polkadot-api/substrate-bindings";
 import { contracts, kreivo } from "@kippurocks/papi-descriptors";
-import { createInkSdk, InkSdkTypedApi } from "@polkadot-api/sdk-ink";
+import { createInkV5Sdk, InkSdkTypedApi } from "@polkadot-api/sdk-ink";
 
 export async function currency(client: PolkadotClient) {
   const spec = await client.getChainSpecData();
@@ -36,10 +36,10 @@ export type TicketsContractTypes =
   (typeof contracts)["tickettoTickets"]["__types"];
 
 type EventsSdk = ReturnType<
-  typeof createInkSdk<InkSdkTypedApi, (typeof contracts)["tickettoEvents"]>
+  typeof createInkV5Sdk<InkSdkTypedApi, (typeof contracts)["tickettoEvents"]>
 >;
 type TicketsSdk = ReturnType<
-  typeof createInkSdk<InkSdkTypedApi, (typeof contracts)["tickettoTickets"]>
+  typeof createInkV5Sdk<InkSdkTypedApi, (typeof contracts)["tickettoTickets"]>
 >;
 export type EventsContract = ReturnType<EventsSdk["getContract"]>;
 export type TicketsContract = ReturnType<TicketsSdk["getContract"]>;
