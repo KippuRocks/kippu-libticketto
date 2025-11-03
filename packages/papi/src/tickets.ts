@@ -20,7 +20,7 @@ export class KippuTicketsCalls implements TicketsCalls {
     @inject(TOKEN.TICKETS_CONTRACT) private readonly tickets: TicketsContract,
     @inject(TOKEN.SUBMITTER) private readonly submitter: TransactionSubmitter,
     @inject(TOKEN.MERCHANT_ID) private readonly merchantId: number
-  ) { }
+  ) {}
 
   async issue(eventId: EventId) {
     const result = await this.tickets.query("issue_ticket", {
@@ -41,6 +41,7 @@ export class KippuTicketsCalls implements TicketsCalls {
         event_id: eventId,
       },
       gasLimit: result.value.gasRequired,
+      storageDepositLimit: result.value.storageDeposit,
     });
 
     await this.submitter.signAndSubmit(tx);
@@ -74,6 +75,7 @@ export class KippuTicketsCalls implements TicketsCalls {
     const tx = this.tickets.send("initiate_pending_transfer", {
       data,
       gasLimit: result.value.gasRequired,
+      storageDepositLimit: result.value.storageDeposit,
     });
 
     await this.submitter.signAndSubmit(tx);
@@ -97,6 +99,7 @@ export class KippuTicketsCalls implements TicketsCalls {
     const tx = this.tickets.send("accept_pending_transfer", {
       data,
       gasLimit: result.value.gasRequired,
+      storageDepositLimit: result.value.storageDeposit,
     });
 
     await this.submitter.signAndSubmit(tx);
@@ -120,6 +123,7 @@ export class KippuTicketsCalls implements TicketsCalls {
     const tx = this.tickets.send("cancel_pending_transfer", {
       data,
       gasLimit: result.value.gasRequired,
+      storageDepositLimit: result.value.storageDeposit,
     });
 
     await this.submitter.signAndSubmit(tx);
@@ -173,7 +177,7 @@ export class KippuTicketsStorage implements TicketsStorage {
     @inject(TOKEN.MERCHANT_ID) private readonly merchantId: number,
     @inject(TickettoModelConverter)
     private readonly converter: TickettoModelConverter
-  ) { }
+  ) {}
 
   async get(eventId: EventId, id: TicketId) {
     const response = await this.tickets.query("get", {
@@ -205,9 +209,9 @@ export class KippuTicketsStorage implements TicketsStorage {
       },
       price: ticket.price
         ? {
-          amount: ticket.price.amount,
-          asset: await this.converter.assetMetadata(ticket.price.asset),
-        }
+            amount: ticket.price.amount,
+            asset: await this.converter.assetMetadata(ticket.price.asset),
+          }
         : undefined,
     } as Ticket;
   }
@@ -227,9 +231,9 @@ export class KippuTicketsStorage implements TicketsStorage {
     const items =
       eventId !== undefined
         ? await this.api.query.ListingsCatalog.Account.getEntries(who, [
-          this.merchantId,
-          eventId,
-        ])
+            this.merchantId,
+            eventId,
+          ])
         : await this.api.query.ListingsCatalog.Account.getEntries(who);
 
     return Promise.all(
@@ -282,6 +286,7 @@ export class KippuTicketsStorage implements TicketsStorage {
           id,
         },
         gasLimit,
+        storageDepositLimit: 1n * 10n ** 12n,
       })
     );
   }
